@@ -34,7 +34,7 @@ public class SimpleBiomeManager implements BiomeManager {
 
 	@Override
 	public void setPlayerBiomeWeather(SpoutPlayer player, Biome biome, SpoutWeather weather) {
-		PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+		PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 		info.setBiomeWeather(biome, weather);
 		if (player.isSpoutCraftEnabled()) {
 			player.sendPacket(new PacketBiomeWeather(biome, weather));
@@ -43,7 +43,7 @@ public class SimpleBiomeManager implements BiomeManager {
 
 	@Override
 	public void setPlayerWeather(SpoutPlayer player, SpoutWeather weather) {
-		PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+		PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 		for (Biome biome : Biome.values()) {
 			info.setBiomeWeather(biome, weather);
 			if (player.isSpoutCraftEnabled()) {
@@ -58,7 +58,7 @@ public class SimpleBiomeManager implements BiomeManager {
 		
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 			SpoutPlayer sPlayer = SpoutManager.getPlayer(player);
-			PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+			PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 			info.setBiomeWeather(biome, weather);
 			if (sPlayer.isSpoutCraftEnabled()) {
 				sPlayer.sendPacket(new PacketBiomeWeather(biome, weather));
@@ -75,7 +75,7 @@ public class SimpleBiomeManager implements BiomeManager {
 		
 		for (Player player : Bukkit.getServer().getOnlinePlayers()) {
 			SpoutPlayer sPlayer = SpoutManager.getPlayer(player);
-			PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+			PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 			for (Biome biome : Biome.values()) {
 				info.setBiomeWeather(biome, weather);
 				if (sPlayer.isSpoutCraftEnabled()) {
@@ -86,7 +86,7 @@ public class SimpleBiomeManager implements BiomeManager {
 	}
 
 	public void onPlayerJoin(SpoutPlayer player) {
-		PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+		PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 		
 		if(!globalWeather.isEmpty()) {
 			for(Biome biome : globalWeather.keySet()) {
@@ -104,7 +104,7 @@ public class SimpleBiomeManager implements BiomeManager {
 
 	@Override
 	public SpoutWeather getPlayerBiomeWeather(Player player, Biome biome) {
-		PlayerInformation info = SpoutManager.getPlayerManager().getPlayerInfo(player);
+		PlayerInformation info = SpoutManager.getGlobalManager().getPlayerInfo(player);
 		return info.getBiomeWeather(biome);
 	}
 

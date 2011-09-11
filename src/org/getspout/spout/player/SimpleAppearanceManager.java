@@ -246,7 +246,7 @@ public class SimpleAppearanceManager implements AppearanceManager{
 
 	@Override
 	public void resetEntitySkin(LivingEntity lv) {
-		SpoutManager.getPlayerManager().getGlobalInfo().setEntitySkin(lv, null);
+		SpoutManager.getGlobalManager().getGlobalInfo().setEntitySkin(lv, null);
 		for(Player p : Bukkit.getServer().getOnlinePlayers()){
 			SpoutCraftPlayer player = (SpoutCraftPlayer)SpoutCraftPlayer.getPlayer(p);
 			if(player.isSpoutCraftEnabled()){
@@ -293,7 +293,7 @@ public class SimpleAppearanceManager implements AppearanceManager{
 					for (EntitySkinType type : EntitySkinType.values()) {
 						String urlSkin = player.getInformation().getEntitySkin(lv, type);
 						if (urlSkin == null) {
-							urlSkin = SpoutManager.getPlayerManager().getGlobalInfo().getEntitySkin(lv, type);
+							urlSkin = SpoutManager.getGlobalManager().getGlobalInfo().getEntitySkin(lv, type);
 						}
 						if (urlSkin != null) {
 							player.sendPacket(new PacketEntitySkin(lv, urlSkin, type.getId()));
@@ -475,7 +475,7 @@ public class SimpleAppearanceManager implements AppearanceManager{
 
 	@Override
 	public void setGlobalEntitySkin(LivingEntity entity, String url, EntitySkinType type) {
-		SpoutManager.getPlayerManager().getGlobalInfo().setEntitySkin(entity, url, type);
+		SpoutManager.getGlobalManager().getGlobalInfo().setEntitySkin(entity, url, type);
 		for(Player p : Bukkit.getServer().getOnlinePlayers()){
 			SpoutCraftPlayer player = (SpoutCraftPlayer)SpoutCraftPlayer.getPlayer(p);
 			if(player.isSpoutCraftEnabled()){

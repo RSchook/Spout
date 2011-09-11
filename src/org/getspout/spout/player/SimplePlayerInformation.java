@@ -81,7 +81,7 @@ public class SimplePlayerInformation implements PlayerInformation{
 			//get information from global information, if ret==null
 			if(ret==null)
 			{
-				ret = getter.invoke(SpoutManager.getPlayerManager().getGlobalInfo(), args);
+				ret = getter.invoke(SpoutManager.getGlobalManager().getGlobalInfo(), args);
 			}
 		} catch(Exception e){
 			throw new NoSuchMethodException("No get-method for the property '"+key+"' could be found.");

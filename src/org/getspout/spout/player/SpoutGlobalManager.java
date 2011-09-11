@@ -25,15 +25,19 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.getspout.spout.entity.SpoutCraftEntity;
 import org.getspout.spout.inventory.SimpleItemManager;
 import org.getspout.spoutapi.SpoutManager;
+import org.getspout.spoutapi.entity.SpoutEntity;
+import org.getspout.spoutapi.player.GlobalManager;
 import org.getspout.spoutapi.player.PlayerInformation;
-import org.getspout.spoutapi.player.PlayerManager;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
-public class SimplePlayerManager implements PlayerManager{
+public class SpoutGlobalManager implements GlobalManager{
 	
 	HashMap<String, PlayerInformation> infoMap = new HashMap<String, PlayerInformation>();
 	PlayerInformation globalInfo = new SimplePlayerInformation();
@@ -118,7 +122,7 @@ public class SimplePlayerManager implements PlayerManager{
 	}
 
 	@Override
-	public Entity getEntity(UUID id) {
+	public SpoutEntity getEntity(UUID id) {
 		WeakReference<Entity> result = entityUniqueIdMap.get(id);
 		Entity found = null;
 		if (result != null && result.get() != null) {
@@ -134,16 +138,17 @@ loop:		for (World world : Bukkit.getServer().getWorlds()){
 				}
 			}
 		}
+		found = getEntity(found);
 		if (found != null) {
 			result = new WeakReference<Entity>(found);
 			entityUniqueIdMap.put(id, result);
 		}
-		return found;
+		return (SpoutEntity)found;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Entity getEntity(int entityId) {
+	public SpoutEntity getEntity(int entityId) {
 		WeakReference<Entity> result = (WeakReference<Entity>) entityIdMap.get(entityId);
 		Entity found = null;
 		if (result != null && result.get() != null) {
@@ -159,10 +164,21 @@ loop:		for (World world : Bukkit.getServer().getWorlds()){
 				}
 			}
 		}
+		found = getEntity(found);
 		if (found != null) {
 			result = new WeakReference<Entity>(found);
 			entityIdMap.put(entityId, result);
 		}
-		return found;
+		return (SpoutEntity)found;
+	}
+
+	@Override
+	public SpoutEntity getEntity(Entity entity) {
+		if (entity == null) {
+			return null;
+		}
+		CraftEntity ce = (CraftEntity)entity;
+		CraftEntity result = SpoutCraftEntity.getUpdatedEntity(((CraftServer)ce.getServer()), ce.getHandle(), ce);
+		return (SpoutEntity)result;
 	}
 }

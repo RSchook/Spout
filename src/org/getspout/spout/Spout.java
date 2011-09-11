@@ -53,7 +53,7 @@ import org.getspout.spout.packet.listener.PacketListeners;
 import org.getspout.spout.player.SimpleAppearanceManager;
 import org.getspout.spout.player.SimpleBiomeManager;
 import org.getspout.spout.player.SimpleFileManager;
-import org.getspout.spout.player.SimplePlayerManager;
+import org.getspout.spout.player.SpoutGlobalManager;
 import org.getspout.spout.player.SimpleSkyManager;
 import org.getspout.spout.player.SpoutCraftPlayer;
 import org.getspout.spout.sound.SimpleSoundManager;
@@ -88,7 +88,7 @@ public class Spout extends JavaPlugin{
 		SpoutManager.getInstance().setSkyManager(new SimpleSkyManager());
 		SpoutManager.getInstance().setInventoryBuilder(new SpoutInventoryBuilder());
 		SpoutManager.getInstance().setPacketManager(new SimplePacketManager());
-		SpoutManager.getInstance().setPlayerManager(new SimplePlayerManager());
+		SpoutManager.getInstance().setGlobalManager(new SpoutGlobalManager());
 		SpoutManager.getInstance().setCacheManager(new SimpleCacheManager());
 		SpoutManager.getInstance().setChunkDataManager(new SimpleChunkDataManager());
 		SpoutManager.getInstance().setBiomeManager(new SimpleBiomeManager());
@@ -102,7 +102,7 @@ public class Spout extends JavaPlugin{
 		((SimpleAppearanceManager)SpoutManager.getAppearanceManager()).onPluginDisable();
 		((SimpleItemManager)SpoutManager.getItemManager()).reset();
 		((SimpleSkyManager)SpoutManager.getSkyManager()).reset();
-		((SimplePlayerManager)SpoutManager.getPlayerManager()).onPluginDisable();
+		((SpoutGlobalManager)SpoutManager.getGlobalManager()).onPluginDisable();
 		Player[] online = getServer().getOnlinePlayers();
 		for (Player player : online) {
 			try {
@@ -181,6 +181,7 @@ public class Spout extends JavaPlugin{
 		getServer().getPluginManager().registerEvent(Type.BLOCK_CANBUILD, blockListener, Priority.Lowest, this);
 		getServer().getPluginManager().registerEvent(Type.ENTITY_TARGET, entityListener, Priority.Lowest, this);
 		getServer().getPluginManager().registerEvent(Type.ENTITY_DAMAGE, entityListener, Priority.Lowest, this);
+		getServer().getPluginManager().registerEvent(Type.CREATURE_SPAWN, entityListener, Priority.Monitor, this);
 
 		getCommand("spout").setExecutor(new SpoutCommand(this));
 		
@@ -200,13 +201,13 @@ public class Spout extends JavaPlugin{
 			SpoutCraftPlayer.updateBukkitEntity(player);
 			authenticate(player);
 			playerListener.manager.onPlayerJoin(player);
-			((SimplePlayerManager)SpoutManager.getPlayerManager()).onPlayerJoin(player);
+			((SpoutGlobalManager)SpoutManager.getGlobalManager()).onPlayerJoin(player);
 			player.setPreCachingComplete(true); //already done if we are already online!
 		}
 
 		SpoutCraftChunk.replaceAllBukkitChunks();
 		((SimpleAppearanceManager)SpoutManager.getAppearanceManager()).onPluginEnable();
-		((SimplePlayerManager)SpoutManager.getPlayerManager()).onPluginEnable();
+		((SpoutGlobalManager)SpoutManager.getGlobalManager()).onPluginEnable();
 		
 		CustomBlock.replaceBlocks();
 		

@@ -35,7 +35,7 @@ import org.bukkit.inventory.Inventory;
 import org.getspout.spout.chunkcache.ChunkCache;
 import org.getspout.spout.inventory.SimpleItemManager;
 import org.getspout.spout.player.SimpleAppearanceManager;
-import org.getspout.spout.player.SimplePlayerManager;
+import org.getspout.spout.player.SpoutGlobalManager;
 import org.getspout.spout.player.SpoutCraftPlayer;
 import org.getspout.spoutapi.SpoutManager;
 import org.getspout.spoutapi.event.inventory.InventoryCloseEvent;
@@ -51,7 +51,7 @@ public class SpoutPlayerListener extends PlayerListener{
 		SpoutCraftPlayer.updateBukkitEntity(event.getPlayer());
 		updatePlayerEvent(event);
 		Spout.getInstance().authenticate(event.getPlayer());
-		((SimplePlayerManager)SpoutManager.getPlayerManager()).onPlayerJoin(event.getPlayer());
+		((SpoutGlobalManager)SpoutManager.getGlobalManager()).onPlayerJoin(event.getPlayer());
 		manager.onPlayerJoin(event.getPlayer());
 	}
 

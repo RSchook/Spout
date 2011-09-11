@@ -581,7 +581,7 @@ public class SpoutCraftPlayer extends CraftPlayer implements SpoutPlayer{
 
 	@Override
 	public PlayerInformation getInformation() {
-		return SpoutManager.getPlayerManager().getPlayerInfo(this);
+		return SpoutManager.getGlobalManager().getPlayerInfo(this);
 	}
 	
 	@Override
