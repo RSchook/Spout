@@ -87,6 +87,7 @@ public final class CodecLookupService {
 			/* 0x6C */ bind(EnchantItemCodec.class);
 			/* 0x82 */ bind(UpdateSignCodec.class);
 			/* 0x83 */ bind(MapDataCodec.class);
+			/* 0xC3 */ bind(SpoutcraftCodec.class);
 			/* 0xC8 */ bind(StatisticCodec.class);
 			/* 0xC9 */ bind(UserListItemCodec.class);
 			/* 0xFE */ bind(ServerListPingCodec.class);

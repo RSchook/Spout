@@ -25,6 +25,7 @@ public final class HandlerLookupService {
 			bind(ActivateItemMessage.class, ActivateItemMessageHandler.class);
 			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
 			bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
+			bind(SpoutcraftMessage.class, SpoutcraftMessageHandler.class);
 			bind(ServerListPingMessage.class, ServerListPingMessageHandler.class);
 			bind(PingMessage.class, PingMessageHandler.class);
 			bind(QuickBarMessage.class, QuickBarMessageHandler.class);
